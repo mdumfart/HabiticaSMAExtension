@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_party"
+            android:icon="@drawable/ic_party"
+            android:title="Party" />
+
+        <item
+            android:id="@+id/nav_test"
+            android:icon="@drawable/ic_baseline_layers_24"
+            android:title="Test" />
+    </group>
+
+<!--    <group android:checkableBehavior="single">
+        <item android:title="Profile">
+            <menu>
+                <item
+                    android:id="@+id/nav_profile"
+                    android:title="Profile" />
+            </menu>
+        </item>
+    </group>-->
+
+    <item android:title="Logout" android:icon="@drawable/ic_logout" android:onClick="performLogout">
+    </item>
+</menu>

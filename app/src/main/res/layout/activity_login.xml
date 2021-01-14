@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/userId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="42a8c893-3efd-483f-a284-79b2c6e86d96"
+        tools:layout_editor_absoluteX="175dp"
+        tools:layout_editor_absoluteY="122dp"
+        android:hint="@string/user_id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="150dp"/>
+
+    <EditText
+        android:id="@+id/apiToken"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="53cdace6-2d4a-4d4d-9f98-171f9130eca9"
+        app:layout_constraintTop_toBottomOf="@+id/userId"
+        tools:layout_editor_absoluteX="175dp"
+        android:hint="@string/user_id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/authenticate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/authenticate"
+        app:layout_constraintTop_toBottomOf="@+id/apiToken"
+        tools:layout_editor_absoluteX="159dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
