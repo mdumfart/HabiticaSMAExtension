@@ -7,6 +7,7 @@ import com.example.habiticasmaextension.core.models.Stats;
 import com.example.habiticasmaextension.core.models.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -74,8 +75,12 @@ public class HabiticaProxyImpl implements HabiticaProxy {
     public List<GroupMember> getGroupMembers(String groupId) throws IOException {
         Proxy_GroupMembers proxyGroupMembers = proxy.getGroupMembers("groups/" + groupId + "/members").execute().body();
 
-        Log.e("here", proxyGroupMembers.toString());
+        List<GroupMember> members = new ArrayList<GroupMember>();
 
-        return null;
+        for (UserInGroup member : proxyGroupMembers.data){
+            members.add(new GroupMember(member.profile.name, member.id, ""));
+        }
+
+        return members;
     }
 }
