@@ -46,7 +46,7 @@ class Stats{
     public Buffs buffs;
     public Training training;
     public double hp;
-    public int mp;
+    public double mp;
     public double exp;
     public double gp;
     public int lvl;
@@ -175,8 +175,8 @@ class Collect{
 }
 
 class Progress{
-    public int up;
-    public int down;
+    public double up;
+    public double down;
     public int collectedItems;
     public Collect collect;
 }

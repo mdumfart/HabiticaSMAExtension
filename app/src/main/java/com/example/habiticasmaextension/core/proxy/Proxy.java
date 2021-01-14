@@ -10,4 +10,7 @@ public interface Proxy {
 
     @GET()
     Call<Proxy_GroupMembers> getGroupMembers(@Url String url);
+
+    @GET()
+    Call<Proxy_GroupChat> getGroupChat(@Url String url);
 }

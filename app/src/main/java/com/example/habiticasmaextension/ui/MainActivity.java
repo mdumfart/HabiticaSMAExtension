@@ -24,16 +24,20 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.example.habiticasmaextension.R;
+import com.example.habiticasmaextension.core.models.GroupMember;
 import com.example.habiticasmaextension.core.models.User;
 import com.google.android.material.navigation.NavigationView;
 
 import org.w3c.dom.Text;
+
+import java.util.List;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
     public User user;
+    public List<GroupMember> groupMembers;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;

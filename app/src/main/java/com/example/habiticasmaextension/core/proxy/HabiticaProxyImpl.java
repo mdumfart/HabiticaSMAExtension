@@ -1,14 +1,19 @@
 package com.example.habiticasmaextension.core.proxy;
 
+import android.content.Context;
+import android.util.ArrayMap;
 import android.util.Log;
 
 import com.example.habiticasmaextension.core.models.GroupMember;
 import com.example.habiticasmaextension.core.models.Stats;
 import com.example.habiticasmaextension.core.models.User;
+import com.example.habiticasmaextension.core.services.PreferencesService;
+import com.example.habiticasmaextension.core.services.PreferencesServiceFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -19,6 +24,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class HabiticaProxyImpl implements HabiticaProxy {
     private static final String SERVICE_BASE_URL = "https://habitica.com/api/v3/";
     private static final String X_CLIENT = "42a8c893-3efd-483f-a284-79b2c6e86d96-SMAHabiticaExtension";
+    private static final String CHAT_API_PREFIX ="@habiticaExt:";
+    private static final int API_KEY_LENGTH = 36;
 
     private String userId;
     private String apiToken;
@@ -72,15 +79,43 @@ public class HabiticaProxyImpl implements HabiticaProxy {
     }
 
     @Override
-    public List<GroupMember> getGroupMembers(String groupId) throws IOException {
+    public List<GroupMember> getGroupMembers(String groupId, Context ctx) throws IOException {
         Proxy_GroupMembers proxyGroupMembers = proxy.getGroupMembers("groups/" + groupId + "/members").execute().body();
 
         List<GroupMember> members = new ArrayList<GroupMember>();
 
         for (UserInGroup member : proxyGroupMembers.data){
-            members.add(new GroupMember(member.profile.name, member.id, ""));
+            // Try if there is api key in preferences
+            String apiKey = PreferencesServiceFactory.createService().get(member.id, ctx);
+
+            if (member.id.equals(PreferencesServiceFactory.createService().get("userId", ctx))){
+                apiKey = PreferencesServiceFactory.createService().get("apiToken", ctx);
+            }
+
+            members.add(new GroupMember(member.profile.name, member.id, apiKey));
         }
 
         return members;
+    }
+
+    @Override
+    public Map<String, String> getApiKeysFromChat(String groupId, Context ctx) throws IOException {
+        Proxy_GroupChat proxyGroupChat = proxy.getGroupChat("groups/" + groupId + "/chat").execute().body();
+
+        Map<String, String> keyMap = new ArrayMap<String, String>();
+
+        for(ChatData data : proxyGroupChat.data){
+            if (data.text.contains(CHAT_API_PREFIX)){
+                int dividerIndex = data.text.indexOf(":");
+
+                String apiKey = data.text.substring(dividerIndex + 1, dividerIndex + 1 +API_KEY_LENGTH);
+
+                if (PreferencesServiceFactory.createService().get(data.uuid, ctx).isEmpty()) {
+                    keyMap.put(data.uuid, apiKey);
+                }
+            }
+        }
+
+        return keyMap;
     }
 }

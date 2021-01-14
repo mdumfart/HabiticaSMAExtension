@@ -20,14 +20,16 @@ import com.example.habiticasmaextension.core.wrapper.OnAddApiTokenOk;
 public class AddApiKeyFragment extends DialogFragment {
 
     private String username;
+    private String apiKey;
     private OnAddApiTokenOk onAddApiTokenOk;
 
     public AddApiKeyFragment() {
         // Required empty public constructor
     }
 
-    public AddApiKeyFragment(String username, final OnAddApiTokenOk onAddApiTokenOk) {
+    public AddApiKeyFragment(String username, String apiKey, final OnAddApiTokenOk onAddApiTokenOk) {
         this.username = username;
+        this.apiKey = apiKey;
         this.onAddApiTokenOk = onAddApiTokenOk;
     }
 
@@ -38,13 +40,14 @@ public class AddApiKeyFragment extends DialogFragment {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View dialogView = inflater.inflate(R.layout.fragment_add_api_key, null);
 
+        EditText addApiKeyText = dialogView.findViewById(R.id.add_api_key_text);
+        addApiKeyText.setText(apiKey);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(dialogView);
         builder.setTitle("Add API Key for " + username);
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        EditText addApiKeyText = dialogView.findViewById(R.id.add_api_key_text);
-
                         onAddApiTokenOk.getValue(addApiKeyText.getText().toString());
                     }
                 })

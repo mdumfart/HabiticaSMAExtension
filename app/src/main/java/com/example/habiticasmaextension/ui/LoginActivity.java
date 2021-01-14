@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.habiticasmaextension.R;
 import com.example.habiticasmaextension.core.models.User;
 import com.example.habiticasmaextension.core.proxy.HabiticaProxyFactory;
+import com.example.habiticasmaextension.core.services.PreferencesServiceFactory;
 
 import java.io.IOException;
 
@@ -107,8 +108,8 @@ public class LoginActivity extends AppCompatActivity {
         Context c = getApplicationContext();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(c);
 
-        String savedUserId = pref.getString("userId", "");
-        String savedApiToken = pref.getString("apiToken", "");
+        String savedUserId = PreferencesServiceFactory.createService().get("userId", c);
+        String savedApiToken = PreferencesServiceFactory.createService().get("apiToken", c);
 
         if (!savedUserId.isEmpty() && !savedApiToken.isEmpty()){
             authenticate(savedUserId, savedApiToken, true);
@@ -153,13 +154,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setPreferences() {
         Context c = getApplicationContext();
-        SharedPreferences pref = getDefaultSharedPreferences(c);
-        SharedPreferences.Editor editor = pref.edit();
 
-        editor.putString("userId", userId);
-        editor.putString("apiToken", apiToken);
-
-        editor.commit();
+        PreferencesServiceFactory.createService().put("userId", userId, c);
+        PreferencesServiceFactory.createService().put("apiToken", apiToken, c);
     }
 
     private void validateAuthentication() {
