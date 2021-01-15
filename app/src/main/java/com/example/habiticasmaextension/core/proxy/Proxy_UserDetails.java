@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 class Proxy_UserDetails {
     public boolean success;
@@ -14,10 +15,15 @@ class Proxy_UserDetails {
 
 class Data {
     public Auth auth;
+    public Achievements achievements;
     public Flags flags;
     public Party party;
     public Preferences preferences;
     public Stats stats;
+}
+
+class Achievements {
+    Map<String, Integer> quests;
 }
 
 class Buffs{
@@ -179,14 +185,6 @@ class Progress{
     public double down;
     public int collectedItems;
     public Collect collect;
-}
-
-class Quest{
-    public Progress progress;
-    boolean RSVPNeeded;
-    public boolean rSVPNeeded;
-    public String key;
-    public String completed;
 }
 
 class Party{

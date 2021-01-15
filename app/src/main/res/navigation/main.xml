@@ -8,11 +8,11 @@
     <fragment
         android:id="@+id/nav_party"
         android:name="com.example.habiticasmaextension.ui.PartyFragment"
-        android:label="Party"
+        android:label="Overview"
         tools:layout="@layout/fragment_party" />
     <fragment
         android:id="@+id/nav_test"
-        android:name="com.example.habiticasmaextension.ui.TestFragment"
-        android:label="Test"
-        tools:layout="@layout/fragment_test" />
+        android:name="com.example.habiticasmaextension.ui.UnfinishedQuestsFragment"
+        android:label="Unfinished Quests"
+        tools:layout="@layout/fragment_unfinished_quests" />
 </navigation>

@@ -27,4 +27,5 @@
     <string name="add_api_key">Add API Key</string>
     <string name="api_key">API Key</string>
     <string name="retrieve_keys_from_chat">Retrieve keys from chat</string>
+    <string name="unfinished_quests_description">The following quests have not been complete by any party members that have provided their API token.</string>
 </resources>

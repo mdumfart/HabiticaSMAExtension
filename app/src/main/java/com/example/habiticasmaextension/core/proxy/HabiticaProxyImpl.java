@@ -6,12 +6,14 @@ import android.util.Log;
 
 import com.example.habiticasmaextension.core.models.GroupMember;
 import com.example.habiticasmaextension.core.models.Stats;
+import com.example.habiticasmaextension.core.models.ThinQuest;
 import com.example.habiticasmaextension.core.models.User;
 import com.example.habiticasmaextension.core.services.PreferencesService;
 import com.example.habiticasmaextension.core.services.PreferencesServiceFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +65,12 @@ public class HabiticaProxyImpl implements HabiticaProxy {
         if (proxyUserDetails != null) {
             String classString = proxyUserDetails.data.stats.klass.substring(0, 1).toUpperCase() + proxyUserDetails.data.stats.klass.substring(1);
 
+            List<String> questStringList = new LinkedList<String>();
+
+            for (String questString : proxyUserDetails.data.achievements.quests.keySet()) {
+                questStringList.add(questString);
+            }
+
             return new User(
                     userId,
                     apiToken,
@@ -72,7 +80,9 @@ public class HabiticaProxyImpl implements HabiticaProxy {
                             proxyUserDetails.data.stats.lvl,
                             classString
                     ),
-                    proxyUserDetails.data.party._id);
+                    proxyUserDetails.data.party._id,
+                    questStringList
+                    );
         }
 
         return null;
@@ -117,5 +127,18 @@ public class HabiticaProxyImpl implements HabiticaProxy {
         }
 
         return keyMap;
+    }
+
+    @Override
+    public List<ThinQuest> getAllQuests() throws IOException {
+        Proxy_Quests proxyQuests = proxy.getQuests().execute().body();
+
+        List<ThinQuest> quests = new LinkedList<ThinQuest>();
+
+        for(Map.Entry<String, Quest> entry : proxyQuests.data.quests.entrySet()) {
+            quests.add(new ThinQuest(entry.getValue().key, entry.getValue().text));
+        }
+
+        return quests;
     }
 }

@@ -39,7 +39,6 @@ public class PartyFragment extends Fragment {
     private PartyMembersAdapter partyMembersAdapter;
 
     public PartyFragment() {
-        // Required empty public constructor
     }
 
     @Override

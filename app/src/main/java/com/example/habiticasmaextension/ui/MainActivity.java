@@ -26,6 +26,7 @@ import android.widget.Toolbar;
 import com.example.habiticasmaextension.R;
 import com.example.habiticasmaextension.core.models.GroupMember;
 import com.example.habiticasmaextension.core.models.User;
+import com.example.habiticasmaextension.core.services.PreferencesServiceFactory;
 import com.google.android.material.navigation.NavigationView;
 
 import org.w3c.dom.Text;
@@ -91,14 +92,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void performLogout(MenuItem item) {
-        Context c = getApplicationContext();
-        SharedPreferences pref = getDefaultSharedPreferences(c);
-        SharedPreferences.Editor editor = pref.edit();
-
-        editor.remove("apiKey");
-        editor.remove("userId");
-
-        editor.commit();
+        PreferencesServiceFactory.createService().remove("apiKey", getApplicationContext());
+        PreferencesServiceFactory.createService().remove("userId", getApplicationContext());
 
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.putExtra("loggingOut", true);

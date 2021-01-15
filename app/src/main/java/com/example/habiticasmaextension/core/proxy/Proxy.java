@@ -5,7 +5,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Url;
 
 public interface Proxy {
-    @GET("user?userFields=party.quest,party._id,stats")
+    @GET("user?userFields=party.quest,party._id,stats,achievements.quests")
     Call<Proxy_UserDetails> getUserDetails();
 
     @GET()
@@ -13,4 +13,7 @@ public interface Proxy {
 
     @GET()
     Call<Proxy_GroupChat> getGroupChat(@Url String url);
+
+    @GET("content")
+    Call<Proxy_Quests> getQuests();
 }

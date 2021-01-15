@@ -24,7 +24,6 @@ import com.example.habiticasmaextension.core.models.User;
 import com.example.habiticasmaextension.core.proxy.HabiticaProxyFactory;
 import com.example.habiticasmaextension.core.services.PreferencesServiceFactory;
 import com.example.habiticasmaextension.core.wrapper.OnAddApiTokenOk;
-import com.example.habiticasmaextension.ui.LoginActivity;
 import com.example.habiticasmaextension.ui.MainActivity;
 
 import java.io.IOException;
@@ -32,7 +31,6 @@ import java.util.List;
 
 
 public class PartyMembersAdapter extends RecyclerView.Adapter<PartyMembersAdapter.PartyMemberViewHolder> {
-
     Context context;
     List<GroupMember> members;
 
@@ -102,6 +100,7 @@ public class PartyMembersAdapter extends RecyclerView.Adapter<PartyMembersAdapte
             protected void onPostExecute(User user) {
                 if (user != null) {
                     member.stats = new Stats(user.stats.hp, user.stats.level, user.stats.klass);
+                    member.questStrings = user.questStrings;
                     notifyDataSetChanged();
                 }
                 else {
@@ -170,6 +169,8 @@ public class PartyMembersAdapter extends RecyclerView.Adapter<PartyMembersAdapte
                     PreferencesServiceFactory.createService().put(member.userId, apiKey, context);
                     holder.addApiKeyButton.setVisibility(View.INVISIBLE);
                     holder.checkApiKeyImage.setVisibility(View.VISIBLE);
+
+                    getStats(member);
                 }
                 else {
                     Toast.makeText(((MainActivity) context), "Invalid API key", Toast.LENGTH_LONG).show();

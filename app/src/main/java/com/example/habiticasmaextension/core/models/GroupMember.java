@@ -18,6 +18,7 @@ public class GroupMember {
     public String userId;
     private String apiKey;
     public Stats stats;
+    public List<String> questStrings;
 
     public GroupMember(String username, String userId, String apiKey) {
         this.username = username;
